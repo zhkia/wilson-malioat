@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wilson Malioat — Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* SILVER PEARL THEME (Light Mode) */
+      --bg-gradient: linear-gradient(-45deg, #eef2f3, #8e9eab, #eef2f3, #cfd9df);
+      --card-bg: rgba(255, 255, 255, 0.75); /* Mas opaque konti para sa About Me */
+      --text-main: #2d3436; 
+      --text-muted: #636e72; 
+      --accent-color: #0984e3; 
+      --accent-hover: #74b9ff;
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --card-border: 1px solid rgba(255, 255, 255, 0.8);
+      --profile-border: #2d3436;
+    }
+
+    /* BLACK PEARL THEME (Dark Mode) */
+    body.dark-mode {
+      --bg-gradient: linear-gradient(-45deg, #232526, #414345, #232526, #0f2027);
+      --card-bg: rgba(30, 39, 46, 0.9); /* Mas opaque sa dark mode */
+      --text-main: #dfe6e9;
+      --text-muted: #b2bec3;
+      --accent-color: #00cec9; 
+      --accent-hover: #81ecec;
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      --card-border: 1px solid rgba(255, 255, 255, 0.1);
+      --profile-border: #dfe6e9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg-gradient);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+      text-align: center;
+      transition: color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 1200px; /* Pinalaki ko container */
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Typography */
+    h1 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      opacity: 0.9;
+    }
+
+    p.intro-text {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 5px;
+    }
+
+    .name {
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--text-main), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 5px 0 15px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.1));
+      line-height: 1.1;
+    }
+
+    .sub-intro {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 650px;
+      line-height: 1.7;
+    }
+
+    /* Profile Picture */
+    .profile-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+      width: 260px;
+      height: 260px;
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--profile-border);
+      box-shadow: var(--shadow);
+      background-color: #bdbdbd;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 2;
+      animation: floatImg 6s ease-in-out infinite;
+    }
+
+    @keyframes floatImg {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .profile-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 2px dashed var(--accent-color);
+      opacity: 0.5;
+      animation: spin 20s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    /* About Button */
+    .about-toggle-btn {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: var(--card-border);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .about-toggle-btn:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* --- UPDATED ABOUT CONTENT (MALAKI AT NASA GITNA) --- */
+    .about-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      background: var(--card-bg);
+      border: var(--card-border);
+      /* Default state is hidden */
+      padding: 0; 
+      
+      /* IMPORTANT: Sizes for "Half Screen" look */
+      width: 90%; 
+      max-width: 900px; /* Limitahan para di sobrang lapad sa PC */
+      
+      border-radius: 30px; /* Mas bilog na kanto */
+      text-align: center;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(15px);
+      margin: 0 auto; /* Gitna */
+    }
+
+    /* State kapag nakabukas (SHOW) */
+    .about-content.show {
+      max-height: 1000px; /* Malaking space para kasya lahat */
+      opacity: 1;
+      padding: 60px 40px; /* Malaking padding sa loob */
+      margin-bottom: 40px;
+      transform: scale(1.02);
+      border: 2px solid var(--accent-color); /* Highlight border */
+    }
+
+    .about-content h3 {
+      font-size: 2rem; /* Mas malaking title */
+      margin-bottom: 25px;
+      color: var(--accent-color);
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .about-content p {
+        font-size: 1.25rem; /* Mas malaking text para madaling basahin */
+        line-height: 2; /* Mas maluwag na spacing */
+        color: var(--text-main); /* Mas malinaw na kulay */
+    }
+
+    /* Title Hobbies */
+    h2 {
+      font-family: "Montserrat", sans-serif;
+      color: var(--accent-color);
+      font-size: 2rem;
+      margin: 40px 0 30px 0;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: var(--accent-color);
+        margin: 8px auto 0;
+        border-radius: 10px;
+    }
+
+    /* Hobbies Grid */
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 30px;
+      width: 100%;
+      max-width: 1100px; /* Limit width */
+      perspective: 1000px;
+    }
+
+    /* --- HIGHLIGHT EFFECT SA CARDS --- */
+    .hobby-box {
+      background: var(--card-bg);
+      border: var(--card-border);
+      padding: 35px 25px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.4s ease;
+      height: 100%; 
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden; 
+    }
+
+    /* Shiny Effect Line */
+    .hobby-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: 0.5s;
+    }
+
+    .hobby-box:hover::before {
+      left: 100%; 
+    }
+
+    /* Highlight Hover State */
+    .hobby-box:hover {
+      transform: translateY(-12px) scale(1.03); 
+      border-color: var(--accent-color); 
+      box-shadow: 0 15px 40px rgba(9, 132, 227, 0.4); 
+    }
+    
+    /* Dark Mode Highlight */
+    body.dark-mode .hobby-box:hover {
+      background: rgba(45, 52, 54, 0.9);
+      box-shadow: 0 0 35px rgba(0, 206, 201, 0.6); 
+      border-color: var(--accent-color);
+    }
+
+    .hobby-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .hobby-box:hover .hobby-icon {
+      transform: scale(1.2) rotate(10deg); 
+    }
+
+    .hobby-title {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        color: var(--text-main);
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+    }
+
+    .hobby-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    /* Footer Buttons */
+    .footer-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+      margin-bottom: 40px;
+    }
+
+    .btn-custom {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: var(--card-border);
+      padding: 14px 35px;
+      border-radius: 50px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .btn-custom img {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s;
+    }
+
+    body.dark-mode .btn-custom img {
+      filter: invert(1);
+    }
+
+    .btn-custom:hover {
+      background: var(--accent-color);
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .btn-custom:hover img {
+       filter: brightness(0) invert(1);
+       transform: scale(1.2);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-color);
+      color: var(--text-main);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.15) rotate(20deg);
+      background: var(--accent-color);
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .name { font-size: 2.5rem; }
+      .footer-buttons { flex-direction: column; width: 100%; align-items: center;}
+      .btn-custom { width: 90%; justify-content: center; }
+      .hobbies-grid { grid-template-columns: 1fr; }
+      .profile-wrapper { width: 220px; height: 220px; }
+      .profile-wrapper::before { width: 240px; height: 240px; }
+      
+      /* Mobile adjustment for About box */
+      .about-content h3 { font-size: 1.5rem; }
+      .about-content p { font-size: 1.1rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Dark/Light Toggle -->
+  <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">🌙</button>
+
+  <div class="container">
+    
+    <!-- Header Area -->
+    <h1 class="fade-up">Welcome to My Portfolio</h1>
+    <p class="intro-text fade-up delay-1">Hi! I'm</p>
+    <span class="name fade-up delay-2">Wilson Malioat</span>
+    <p class="sub-intro fade-up delay-3">A rider, tinkerer, and tech explorer. This page represents who I am and what I'm passionate about. 🚀</p>
+
+    <!-- Profile Picture -->
+    <div class="profile-wrapper fade-up delay-4">
+      <img src="wilson.jpg" alt="Wilson Malioat" class="profile-img">
+    </div>
+
+    <!-- About Me Button (Below Picture) -->
+    <button class="about-toggle-btn fade-up delay-4" id="toggleAboutBtn">
+        ℹ️ About Me
+    </button>
+
+    <!-- About Me Content Section (BIG AND CENTERED) -->
+    <div class="about-content" id="aboutMeSection">
+        <h3>Who am I?</h3>
+        <p>
+          Hello there! I'm <strong>Wilson</strong>, a passionate individual with a knack for adventure and a love for understanding how things work. 
+          <br><br>
+          Whether I'm hitting the open road on my motorcycle, diving into new culinary experiences, or tinkering with mechanical projects, I find joy in exploring the world around me. I'm always eager to learn, grow, and take on new challenges.
+        </p>
+    </div>
+
+    <!-- Hobbies Section -->
+    <h2 class="fade-up delay-4">My Hobbies & Interests</h2>
+    
+    <div class="hobbies-grid fade-up delay-4">
+      
+      <div class="hobby-box">
+        <div class="hobby-icon">🌍</div>
+        <div class="hobby-title">Traveling</div>
+        <div class="hobby-desc">Exploring new places and discovering different cultures makes life exciting.</div>
+      </div>
+
+      <div class="hobby-box">
+        <div class="hobby-icon">🏍️</div>
+        <div class="hobby-title">Motorcycles</div>
+        <div class="hobby-desc">Riding and maintaining motorcycles for the thrill of fun and adventure.</div>
+      </div>
+
+      <div class="hobby-box">
+        <div class="hobby-icon">🍜</div>
+        <div class="hobby-title">Food Lover</div>
+        <div class="hobby-desc">Enjoying good food and trying new cuisines from around the world.</div>
+      </div>
+
+      <div class="hobby-box">
+        <div class="hobby-icon">🛠️</div>
+        <div class="hobby-title">Mechanics</div>
+        <div class="hobby-desc">Fixing and building mechanical stuff to learn exactly how things work.</div>
+      </div>
+
+      <div class="hobby-box">
+        <div class="hobby-icon">⚽</div>
+        <div class="hobby-title">Outdoor Play</div>
+        <div class="hobby-desc">Staying active and having fun through competitive outdoor games and sports.</div>
+      </div>
+
+      <div class="hobby-box">
+        <div class="hobby-icon">🎮</div>
+        <div class="hobby-title">Mobile Gaming</div>
+        <div class="hobby-desc">Playing mobile games to relax, compete, and connect with friends online.</div>
+      </div>
+
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="footer-buttons fade-up delay-4">
+      <a href="https://www.facebook.com/wilson.malioat.2024" target="_blank" class="btn-custom">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+        Facebook
+      </a>
+
+      <a href="https://youtube.com/@malioatwilsonr?si=aSffjAjH42hfvYIU" target="_blank" class="btn-custom">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube">
+        YouTube
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // About Me Toggle
+    const toggleBtn = document.getElementById('toggleAboutBtn');
+    const aboutSection = document.getElementById('aboutMeSection');
+
+    toggleBtn.addEventListener('click', () => {
+      aboutSection.classList.toggle('show');
+      
+      if(aboutSection.classList.contains('show')){
+        toggleBtn.innerHTML = "🔽 Close About Me";
+        // Auto scroll to center the big box
+        setTimeout(() => {
+          aboutSection.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 300);
+      } else {
+        toggleBtn.innerHTML = "ℹ️ About Me";
+      }
+    });
+
+    // Dark Mode Toggle Logic
+    const themeBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark-mode');
+      themeBtn.textContent = '☀️';
+    }
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      
+      if(body.classList.contains('dark-mode')){
+        themeBtn.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+
+</body>
+</html>
